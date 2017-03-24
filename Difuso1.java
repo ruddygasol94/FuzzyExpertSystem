@@ -17,6 +17,9 @@ public class Difuso1 {
     /**
      * @param args the command line arguments
      */
+    
+    //hola wapa
+    
     public static void main(String[] args) {
         Registro reg = new Registro();
         File variables = new File("var.dat");
