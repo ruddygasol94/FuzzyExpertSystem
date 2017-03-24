@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SistemaExpertoDifuso;
+package difuso1;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,90 +14,107 @@ import java.util.Scanner;
  * @author ruddygasol94
  */
 public class Operaciones {
+    Registro reg=new Registro();
     ArrayList<Funcion> a_funciones;
- ArrayList<Integer> entradas = new ArrayList<Integer>();
-    int si,ent;
+    double si,ent;
     Scanner in = new Scanner(System.in);
     
-    public double darY(int x, double x1, int y1, double x2, int y2){
+    public double darY(double x, double x1, int y1, double x2, int y2){
         return (((double)(x-x1)/(double)(x2-x1))*(y2-y1) + y1);
     }
     
     public void entradas()
     {
-        do{
-        System.out.println("Captura entrada entrada: ");
-        ent=in.nextInt();
-        entradas.add(ent);
-        
-            System.out.println("Existen mas entradas?, SI=1, NO=0 ");
-        si=in.nextInt();
-        
-    }while (si==1);
+        ArrayList <Variables> temp=reg.leerVariables(new File("var.dat"));
+ 
+        for (int i = 0; i < temp.size(); i++) {
+            Variables nom_var=temp.get(i);//Para traer todo el paquete de una variable
+            //Y preguntar entradas por variable
+           
+        System.out.println("Captura entrada para variable "+nom_var.getNombre());
+        ent=in.nextDouble();
+             
+            darGrados(ent,temp.get(i));//Envio como parametro el bonche de 
+            //dtos de datos de cada variable, su nombre, sus puntos criticos, y la salida_difusa
+            //se incluye en temp.
             
-            darGrados(entradas);
-            
+        }   
         
         
         }
 
-    public void darGrados(ArrayList<Integer> variReal){
+    public void darGrados(double ent,Variables paaquete){
         double resultado = -1;
-        for(int i = 0; i < a_funciones.size(); i++){
+       
+        for(int i = 0; i < paaquete.etiquetas.size(); i++){
             Funcion f = a_funciones.get(i);
-            
-            for(int p=0;p<variReal.size();p++){
+          
                 
             
             if (f.getPuntos().size() == 1){
                
              
-                if(variReal.get(p)>=(int)f.getInicio() && (int)variReal.get(p)<=f.getFinal()){
+                if(ent>=(int)f.getInicio() && (int)ent<=f.getFinal()){
                      System.out.println("Tri");
                     
-                if (variReal.get(p) < f.getPuntos().get(0))
-                    resultado = darY(variReal.get(p), (int)f.getInicio(), 0, f.getPuntos().get(0), 1);
+                if (ent < f.getPuntos().get(0))
+                    resultado = darY(ent, (int)f.getInicio(), 0, f.getPuntos().get(0), 1);
                 else {
-                    resultado = darY(variReal.get(p), f.getPuntos().get(0), 1, (int)f.getFinal(), 0);
+                    resultado = darY(ent, f.getPuntos().get(0), 1, (int)f.getFinal(), 0);
                     }
+                paaquete.etiquetas.get(i).setSalida_difusa(resultado);
+                //Envio la salida difusa calculada a cada una de las etiquetas
+                //en su campo salida_difusa.
+                
                  System.out.println("Grado de membresía: " + resultado);
+                 
+                 
+                 
             }
                 
                 
             } else {
               
-                 if(variReal.get(p)>=f.getPuntos().get(0) && variReal.get(p)<=f.getPuntos().get(1)){
+                 if(ent>=f.getPuntos().get(0) && ent<=f.getPuntos().get(1)){
                      System.out.println("Tra");
-                     System.out.println("Grado de membresía: " + 1);
+                    paaquete.etiquetas.get(i).setSalida_difusa(resultado);
+                     
+                     System.out.println("Grado de membresía: " + resultado);
+                     
+                      
                 }else
                 {
                
-                 if(variReal.get(p)>=(int)f.getInicio() && (int)variReal.get(p)<=f.getFinal()){
+                 if(ent>=(int)f.getInicio() && (int)ent<=f.getFinal()){
                        System.out.println("Tra");
                       
                        
                  
-                if(variReal.get(p) < f.getPuntos().get(0)){
-                    resultado = darY(variReal.get(p), (double)f.getInicio(), 0, f.getPuntos().get(0), 1);
+                if(ent < f.getPuntos().get(0)){
+                    resultado = darY(ent, (double)f.getInicio(), 0, f.getPuntos().get(0), 1);
                 } else {
-                    resultado = darY(variReal.get(p), f.getPuntos().get(1), 1, (double)f.getFinal(), 0);
+                    resultado = darY(ent, f.getPuntos().get(1), 1, (double)f.getFinal(), 0);
                     
                 }
+                paaquete.etiquetas.get(i).setSalida_difusa(resultado);
                  System.out.println("Grado de membresía: " + resultado);
-                 }
+                   
+                  }
             }
             
             }
            
-            }
-        }        
+        } 
+          
+        
+        
+    
     }
     
     public void recorre(File p_archivo){
         a_funciones = new ArrayList<>();
         Registro reg = new Registro();
         ArrayList<Etiquetas> etiq = reg.leerSecuencial(p_archivo);//Obtiene todas las etiquetas y sus punto critico de 
-        
         
         //para primer función
         Etiquetas e1 = etiq.get(0);//La primera etiqueta se procesa
@@ -130,9 +147,15 @@ public class Operaciones {
                 //distancia = mitad + origen_;
                 distancia=e1.darPuntos().get(0)-origen_;
             }
+
             ultiPunto = e1.darPuntos().get(e1.darPuntos().size() - 1);
             a_funciones.add(new Funcion(origen_, ultiPunto + distancia, e1.darPuntos()));
-           origen_ = etiq.get(v_contador).darPuntos().get(1);
+            if(e1.darPuntos().size()==1){
+           origen_ = etiq.get(v_contador).darPuntos().get(0);
+            }else
+            {
+                 origen_ = etiq.get(v_contador).darPuntos().get(1);
+            }
         }
     }
     
