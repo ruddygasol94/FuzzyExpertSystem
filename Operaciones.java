@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package difuso1;
+package SistemaExpertoDifuso;
 
+import SistemaExpertoDifuso.Etiquetas;
+import SistemaExpertoDifuso.Funcion;
+import SistemaExpertoDifuso.Registro;
+import SistemaExpertoDifuso.Variables;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -23,7 +27,7 @@ public class Operaciones {
         return (((double)(x-x1)/(double)(x2-x1))*(y2-y1) + y1);
     }
     
-    public void entradas()
+    public ArrayList<Variables> entradas()
     {
         ArrayList <Variables> temp=reg.leerVariables(new File("var.dat"));
  
@@ -39,7 +43,7 @@ public class Operaciones {
             //se incluye en temp.
             
         }   
-        
+        return temp;
         
         }
 
@@ -172,3 +176,4 @@ public class Operaciones {
         }
     }
 }
+
