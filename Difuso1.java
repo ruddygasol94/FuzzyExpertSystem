@@ -17,6 +17,9 @@ public class Difuso1 {
     /**
      * @param args the command line arguments
      */
+    
+    //hola wapa
+    
     public static void main(String[] args) {
         Registro reg = new Registro();
         File variables = new File("var.dat");
@@ -27,13 +30,13 @@ public class Difuso1 {
         System.out.println("Ingrese las variables de salida.");
         //reg.m_escrArchMaestro(salidas);
         
-        /*Operaciones op = new Operaciones();
+        Operaciones op = new Operaciones();
         op.recorre(variables);
         op.muestFunciones();
         
         System.out.println("");
-        op.entradas();
-        //op.ordenar();*/
+        
+        
         ArrayList<Variables> var = reg.leerVariables(variables);
         
         ArrayList<Variables> sal = reg.leerVariables(salidas);
@@ -77,6 +80,6 @@ public class Difuso1 {
         for(int cArre = 0; cArre < total_combinaciones; cArre++){
             System.out.println((cArre+1) + ": " +reglas[cArre]);
         }
-        new ReglasInterfaz(reglas, var.size());
+        new ReglasInterfaz(reglas, var.size(),op.entradas());
     }    
 }
