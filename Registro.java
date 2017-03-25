@@ -23,10 +23,11 @@ public class Registro {
     private ArrayList<Etiquetas> etiq;
     
     public void m_escrArchMaestro(File p_archivo){
+        //kj
         try{
             int n;
             StringBuffer buffer = null;
-            RandomAccessFile raf = new RandomAccessFile(p_archivo, "rw");
+            RandomAccessFile raf = new RandomAccessFile("equivalentes.dat", "rw");
             Scanner in = new Scanner(System.in);
             do{
                 if (raf.length() > 0)
@@ -231,6 +232,25 @@ public class Registro {
         return v_variables;
     }
     
+     public void escrReglasEquivalentes(File p_archivo,ArrayList<Equivalencias> reglas){
+        try{
+             RandomAccessFile raf = new RandomAccessFile(p_archivo, "rw");
+            //escribe entero para definir el numero de etiquetas
+            raf.writeInt(reglas.size());
+            for (int i = 0; i < reglas.size(); i++){
+                StringBuffer buffer;
+                Equivalencias et = reglas.get(i);
+                buffer = new StringBuffer(et.getA_reglEquivalentes());
+                buffer.setLength(20);
+                raf.writeChars(buffer.toString());
+                
+              
+            }
+        } catch (IOException ioe){
+            ioe.printStackTrace();
+        }
+    }
+    
     public void imprime(){
         for (int i = 0; i < etiq.size(); i++){
             Etiquetas et = etiq.get(i);
@@ -348,3 +368,4 @@ public class Registro {
         return coincidencia;
     }*/
 }
+
