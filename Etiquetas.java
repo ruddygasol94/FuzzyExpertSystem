@@ -21,6 +21,14 @@ public class Etiquetas {
         puntos_criticos = p_ptosCriticos;
     }
     
+    public double getSalida_difusa() {
+        return salida_difusa;
+    }
+
+    public void setSalida_difusa(double salida_difusa) {
+        this.salida_difusa = salida_difusa;
+    }
+    
     public String darNombre(){
         return nombre;
     }
