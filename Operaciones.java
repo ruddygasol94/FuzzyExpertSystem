@@ -23,7 +23,7 @@ public class Operaciones {
         return (((double)(x-x1)/(double)(x2-x1))*(y2-y1) + y1);
     }
     
-    public void entradas()
+    public ArrayList<Variables> entradas()
     {
         ArrayList <Variables> temp=reg.leerVariables(new File("var.dat"));
  
@@ -38,8 +38,8 @@ public class Operaciones {
             //dtos de datos de cada variable, su nombre, sus puntos criticos, y la salida_difusa
             //se incluye en temp.
             
-        }   
-        
+        }
+        return temp;        
         
         }
 
