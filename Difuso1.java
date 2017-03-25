@@ -80,6 +80,6 @@ public class Difuso1 {
         for(int cArre = 0; cArre < total_combinaciones; cArre++){
             System.out.println((cArre+1) + ": " +reglas[cArre]);
         }
-        new ReglasInterfaz(reglas, var.size());
+        new ReglasInterfaz(reglas, var.size(),op.entradas());
     }    
 }
