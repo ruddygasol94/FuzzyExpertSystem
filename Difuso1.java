@@ -7,6 +7,7 @@ package SistemaExpertoDifuso;
 
 import java.io.File;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,22 +22,24 @@ public class Difuso1 {
     //hola wapa
     
     public static void main(String[] args) {
+        
         Registro reg = new Registro();
         File variables = new File("var.dat");
         File salidas = new File("salidas.dat");
+        
         
         System.out.println("Ingrese las variables de entrada.");
         //reg.m_escrArchMaestro(variables);
         System.out.println("Ingrese las variables de salida.");
         //reg.m_escrArchMaestro(salidas);
         
-        /*Operaciones op = new Operaciones();
+        Operaciones op = new Operaciones();
         op.recorre(variables);
         op.muestFunciones();
-        
+        //new Principal();
         System.out.println("");
-        op.entradas();
-        //op.ordenar();*/
+        
+        
         ArrayList<Variables> var = reg.leerVariables(variables);
         
         ArrayList<Variables> sal = reg.leerVariables(salidas);
@@ -49,6 +52,8 @@ public class Difuso1 {
         }
         
         System.out.println("combinacion = " + total_combinaciones);
+        
+        
         
         String reglas[] = new String[total_combinaciones];
         
@@ -80,6 +85,7 @@ public class Difuso1 {
         for(int cArre = 0; cArre < total_combinaciones; cArre++){
             System.out.println((cArre+1) + ": " +reglas[cArre]);
         }
-        new ReglasInterfaz(reglas, var.size(),op.entradas());
+        ArrayList<Variables> difu = op.entradas(reglas, sal);
+        
     }    
 }

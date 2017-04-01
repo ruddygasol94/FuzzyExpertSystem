@@ -14,10 +14,36 @@ import java.util.ArrayList;
 public class Variables {
     private String nombre;
     ArrayList<Etiquetas> etiquetas;
+    private double li;
+    private double ls;
+   
     
-    public Variables(String p_nombre){
+    
+    
+    public Variables(String p_nombre,double p_li,double p_ls){
         nombre = p_nombre;
+        li=p_li;
+        ls=p_ls;
+        
     }
+
+    public double getLi() {
+        return li;
+    }
+
+    public void setLi(double li) {
+        this.li = li;
+    }
+
+    public double getLs() {
+        return ls;
+    }
+
+    public void setLs(double ls) {
+        this.ls = ls;
+    }
+    
+    
     
     public void setEtiquetas(ArrayList<Etiquetas> p_eti){
         etiquetas = p_eti;

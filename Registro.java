@@ -23,6 +23,7 @@ public class Registro {
     private ArrayList<Etiquetas> etiq;
     
     public void m_escrArchMaestro(File p_archivo){
+        //kj
         try{
             int n;
             StringBuffer buffer = null;
@@ -184,7 +185,7 @@ public class Registro {
                     nombre[c] = temp;
                 }
                 ArrayList<Etiquetas> v_etiquetas = new ArrayList<>();
-                Variables v1 = new Variables(new String(nombre).replace('\0', ' '));
+               // Variables v1 = new Variables(new String(nombre).replace('\0', ' '),li,ls);
                 //Leer unidades
                 char a_unidades[] = new char[20];
                 for (int i = 0; i < a_unidades.length; i++){
@@ -194,8 +195,9 @@ public class Registro {
                 System.out.println("Unidades: " + new String(a_unidades).replace('\0', ' '));
                 
                 //Leer inferior y superior
-                System.out.println("Lim Inferior: " + raf.readInt());
-                System.out.println("Lim Superior: " + raf.readInt());
+               // System.out.println("Lim Inferior: " + raf.readInt());
+                //System.out.println("Lim Superior: " + raf.readInt());
+                 Variables v1 = new Variables(new String(nombre).replace('\0', ' '),raf.readInt(),raf.readInt());
                 
                 //Leer numero de etiquetas
                 int num_etiquetas = raf.readInt();
@@ -229,6 +231,25 @@ public class Registro {
             ioe.printStackTrace();
         }
         return v_variables;
+    }
+    
+     public void escrReglasEquivalentes(File p_archivo,ArrayList<Equivalencias> reglas){
+        try{
+             RandomAccessFile raf = new RandomAccessFile(p_archivo, "rw");
+            //escribe entero para definir el numero de etiquetas
+            raf.writeInt(reglas.size());
+            for (int i = 0; i < reglas.size(); i++){
+                StringBuffer buffer;
+                Equivalencias et = reglas.get(i);
+                buffer = new StringBuffer(et.getA_reglEquivalentes());
+                buffer.setLength(20);
+                raf.writeChars(buffer.toString());
+                
+              
+            }
+        } catch (IOException ioe){
+            ioe.printStackTrace();
+        }
     }
     
     public void imprime(){
@@ -348,3 +369,4 @@ public class Registro {
         return coincidencia;
     }*/
 }
+
